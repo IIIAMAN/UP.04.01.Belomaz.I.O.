@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Редактировать Курс</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #2f3e46;
+      color: #cad2c5;
+    }
+    .container {
+      max-width: 500px;
+      background-color: #354f52;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+      margin-top: 30px;
+    }
+    h1 {
+      color: #84a98c;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .btn-success {
+      background-color: #52796f;
+      border-color: #52796f;
+    }
+    .btn-success:hover {
+      background-color: #84a98c;
+      border-color: #84a98c;
+    }
+    .form-control {
+      background-color: #52796f;
+      color: #cad2c5;
+    }
+    .form-control:focus {
+      background-color: #84a98c;
+      color: #17203D;
+      border-color: #84a98c;
+      box-shadow: 0 0 5px rgba(132, 169, 140, 0.5);
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Редактировать Курс</h1>
+  <a href="/admin/manage-courses" class="btn btn-secondary mb-3">Вернуться к управлению курсами</a>
+
+  <div th:if="${error}" class="alert alert-danger">
+    <p th:text="${error}"></p>
+  </div>
+
+  <form action="#" th:action="@{/admin/update-course}" th:object="${course}" method="post">
+    <input type="hidden" th:field="*{id}">
+    <div class="form-group">
+      <label for="name">Название курса</label>
+      <input type="text" id="name" class="form-control" th:field="*{name}" required>
+    </div>
+    <div class="form-group">
+      <label for="subject">Предмет</label>
+      <select id="subject" class="form-control" th:field="*{subject}" required>
+        <option th:each="subject : ${subjects}" th:value="${subject.id}" th:text="${subject.name}"></option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-success">Сохранить Изменения</button>
+  </form>
+</div>
+</body>
+</html>

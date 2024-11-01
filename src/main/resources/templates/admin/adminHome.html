@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Главная Администратора</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #2f3e46;
+      color: #cad2c5;
+    }
+    .header {
+      background-color: #354f52;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 0 10px #354f52;
+    }
+    h1 {
+      color: #84a98c;
+    }
+    .btn-custom {
+      background-color: #84a98c;
+      color: white;
+    }
+    .btn-custom:hover {
+      background-color: #52796f;
+      box-shadow: 0 0 10px #84a98c;
+    }
+    .btn-danger {
+      background-color: #84a98c;
+    }
+    .btn-danger:hover {
+      background-color: #354f52;
+    }
+  </style>
+</head>
+<body>
+<div class="header">
+  <h1>Добро пожаловать, Администратор!</h1>
+  <a href="/logout" class="btn btn-danger">Выход</a>
+</div>
+<div class="container mt-4 text-center">
+  <a href="/admin/manage" class="btn btn-custom mt-3">Управлять Данными авторизации</a>
+  <a href="/admin/manage-clients" class="btn btn-custom mt-3">Управлять Пользователями</a>
+  <a href="/admin/manage-courses" class="btn btn-custom mt-3">Управлять Курсами</a>
+  <a href="/admin/schedule" class="btn btn-custom mt-3">Управлять Расписанием</a>
+  <a href="/admin/manage-subjects" class="btn btn-custom mt-3">Управлять Предметами</a>
+  <a href="/admin/manage-rooms" class="btn btn-custom mt-3">Управлять Комнатами</a>
+  <a href="/admin/manage-groups" class="btn btn-custom mt-3">Управлять Группами</a>
+  <a href="/admin/manage-grades" class="btn btn-custom mt-3">Управлять Оценками</a>
+  <a href="/admin/manage-client-courses" class="btn btn-custom mt-3">Управление клиентами на курсах</a>
+</div>
+</body>
+</html>

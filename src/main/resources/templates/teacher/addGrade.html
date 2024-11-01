@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Добавить Оценку</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #22223b;
+      color: #f2e9e4;
+    }
+    .header {
+      background-color: #4a4e69;
+      padding: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+<div class="header">
+  <h1>Добавить Оценку</h1>
+  <a href="/teacher/grades/manage" class="btn btn-light">Назад</a>
+</div>
+<div class="container mt-4">
+  <form action="/teacher/grades/add" method="post">
+    <div class="form-group">
+      <label for="studentId">Студент</label>
+      <select id="studentId" name="studentId" class="form-control" required>
+        <option value="" disabled selected>Выберите студента</option>
+        <option th:each="client : ${clients}" th:value="${client.id}" th:text="${client.fullName}"></option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="courseId">Курс</label>
+      <select id="courseId" name="courseId" class="form-control" required>
+        <option value="" disabled selected>Выберите курс</option>
+        <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.name}"></option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="score">Оценка</label>
+      <input type="number" id="score" name="score" class="form-control" min="0" max="100" required>
+    </div>
+    <div th:if="${error}" class="alert alert-danger">
+      <span th:text="${error}"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Добавить Оценку</button>
+  </form>
+</div>
+</body>
+</html>

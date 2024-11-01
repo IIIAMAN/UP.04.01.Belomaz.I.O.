@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактировать Студента на Курсе</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #22223b;
+            color: #f2e9e4;
+        }
+        .header {
+            background-color: #4a4e69;
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1>Редактировать Студента на Курсе</h1>
+    <a href="/teacher/courses" class="btn btn-light">Назад</a>
+</div>
+<div class="container mt-4">
+    <form action="/teacher/courses/edit" method="post">
+        <input type="hidden" name="id" th:value="${clientCourse.id}"/>
+
+        <div th:if="${error}" class="alert alert-danger" role="alert">
+            <span th:text="${error}"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="clientId">Выберите студента:</label>
+            <select name="clientId" id="clientId" class="form-control" required>
+                <option value="" disabled selected>Выберите студента</option>
+                <tr th:each="client : ${clients}">
+                    <option th:value="${client.id}" th:text="${client.fullName}"
+                            th:if="${client.id == clientCourse.client.id}"></option>
+                </tr>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="courseId">Выберите курс:</label>
+            <select name="courseId" id="courseId" class="form-control" required>
+                <option value="" disabled selected>Выберите курс</option>
+                <tr th:each="course : ${courses}">
+                    <option th:value="${course.id}" th:text="${course.name}"
+                            th:if="${course.id == clientCourse.course.id}"></option>
+                </tr>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+    </form>
+</div>
+</body>
+</html>

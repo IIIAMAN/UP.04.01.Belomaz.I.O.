@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Управление Расписанием</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #22223b;
+      color: #f2e9e4;
+    }
+    .header {
+      background-color: #4a4e69;
+      padding: 20px;
+      text-align: center;
+    }
+    .table {
+      background-color: #4a4e69;
+      color: #f2e9e4;
+    }
+    .table th, .table td {
+      vertical-align: middle;
+    }
+    .course-header {
+      background-color: #9a8c98;
+      color: #22223b;
+      padding: 10px;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+<div class="header">
+  <h1>Управление Расписанием</h1>
+  <a href="/teacher/home" class="btn btn-light">Назад</a>
+  <a href="/teacher/schedule/add" class="btn btn-primary">Добавить Расписание</a>
+</div>
+<div class="container mt-4">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Курс</th>
+      <th>Комната</th>
+      <th>Время</th>
+      <th>Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="schedule : ${schedules}">
+      <td th:text="${schedule.course.name}"></td>
+      <td th:text="${schedule.room.name}"></td>
+      <td th:text="${#temporals.format(schedule.dateTime, 'dd-MM-yyyy HH:mm')}"></td>
+      <td>
+        <a th:href="@{/teacher/schedule/edit/{id}(id=${schedule.id})}" class="btn btn-warning">Редактировать</a>
+        <a th:href="@{/teacher/schedule/delete/{id}(id=${schedule.id})}" class="btn btn-danger">Удалить</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

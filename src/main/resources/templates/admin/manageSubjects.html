@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Управление Предметами</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #2f3e46;
+      color: #cad2c5;
+    }
+    .container {
+      margin-top: 30px;
+      background-color: #354f52;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    }
+    h2 {
+      color: #84a98c;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .btn-primary {
+      background-color: #52796f;
+      border-color: #52796f;
+    }
+    .btn-primary:hover {
+      background-color: #84a98c;
+      border-color: #84a98c;
+    }
+    .table {
+      background-color: #1E2A4D;
+    }
+    th, td {
+      color: #FFFFFF;
+    }
+    th {
+      background-color: #6552D0;
+    }
+    .btn-warning {
+      background-color: #FFC107;
+      color: #17203D;
+    }
+    .btn-warning:hover {
+      background-color: #FFA000;
+    }
+    .btn-danger {
+      background-color: #dc3545;
+      color: #FFFFFF;
+    }
+    .btn-danger:hover {
+      background-color: #c82333;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>Управление Предметами</h2>
+  <a href="/admin/home" class="btn btn-secondary mb-3">Вернуться назад</a>
+  <a href="/admin/add-subject" class="btn btn-success mb-3">Добавить Предмет</a>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>Имя Предмета</th>
+      <th>Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="subject : ${subjects}">
+      <td th:text="${subject.name}">Имя Предмета</td>
+      <td>
+        <a th:href="@{/admin/edit-subject(id=${subject.id})}" class="btn btn-warning">Редактировать</a>
+        <a th:href="@{/admin/delete-subject(id=${subject.id})}" class="btn btn-danger">Удалить</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

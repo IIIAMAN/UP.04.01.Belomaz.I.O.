@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Редактировать Расписание</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #2f3e46;
+      color: #cad2c5;
+    }
+    .container {
+      max-width: 500px;
+      background-color: #354f52;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+      margin-top: 30px;
+    }
+    h2 {
+      color: #84a98c;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .btn-primary {
+      background-color: #52796f;
+      border-color: #52796f;
+    }
+    .btn-primary:hover {
+      background-color: #84a98c;
+      border-color: #84a98c;
+    }
+    label {
+      color: #cad2c5;
+    }
+    .form-control {
+      background-color: #52796f;
+      color: #cad2c5;
+    }
+    .form-control:focus {
+      background-color: #84a98c;
+      color: #17203D;
+      border-color: #84a98c;
+      box-shadow: 0 0 5px rgba(132, 169, 140, 0.5);
+    }
+    .alert {
+      margin-top: 20px;
+    }
+  </style>
+  <script>
+    function validateForm() {
+      const dateTimeInput = document.getElementById("dateTime").value;
+      const courseSelect = document.getElementById("course").value;
+      const roomSelect = document.getElementById("room").value;
+
+
+      if (!dateTimeInput) {
+        alert("Пожалуйста, выберите дату и время.");
+        return false;
+      }
+
+
+      if (!courseSelect) {
+        alert("Пожалуйста, выберите курс.");
+        return false;
+      }
+
+
+      if (!roomSelect) {
+        alert("Пожалуйста, выберите кабинет.");
+        return false;
+      }
+
+      return true;
+    }
+  </script>
+</head>
+<body>
+<div class="container">
+  <h2>Редактировать Расписание</h2>
+
+  <div th:if="${success}" class="alert alert-success">
+    Расписание успешно обновлено!
+  </div>
+  <div th:if="${error}" class="alert alert-danger">
+    Ошибка при обновлении расписания. Пожалуйста, попробуйте снова.
+  </div>
+
+  <form action="/admin/update-schedule" method="post" onsubmit="return validateForm()">
+    <input type="hidden" name="id" th:value="${schedule.id}" />
+    <div class="form-group">
+      <label for="dateTime">Дата и время:</label>
+      <input type="datetime-local" class="form-control" id="dateTime" name="dateTime" th:value="${schedule.dateTime}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="course">Курс:</label>
+      <select class="form-control" id="course" name="courseId" required>
+        <option th:each="course : ${courses}"
+                th:value="${course.id}"
+                th:text="${course.name}"
+                th:selected="${course.id == schedule.course.id}"></option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="room">Кабинет:</label>
+      <select class="form-control" id="room" name="roomId" required>
+        <option th:each="room : ${rooms}"
+                th:value="${room.id}"
+                th:text="${room.name}"
+                th:selected="${room.id == schedule.room.id}"></option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Обновить</button>
+    <a href="/admin/schedule" class="btn btn-secondary">Назад</a>
+  </form>
+</div>
+</body>
+</html>

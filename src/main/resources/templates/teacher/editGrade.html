@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Редактировать Оценку</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #22223b;
+      color: #f2e9e4;
+    }
+    .header {
+      background-color: #4a4e69;
+      padding: 20px;
+      text-align: center;
+    }
+    .error-message {
+      color: #ff6b6b;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+<div class="header">
+  <h1>Редактировать Оценку</h1>
+  <a href="/teacher/grades/manage" class="btn btn-light">Назад</a>
+</div>
+<div class="container mt-4">
+  <!-- Вывод сообщения об ошибке, если оно есть -->
+  <div th:if="${error}" class="error-message">
+    <p th:text="${error}"></p>
+  </div>
+
+  <form action="/teacher/grades/edit" method="post">
+    <input type="hidden" name="id" th:value="${grade.id}">
+    <div class="form-group">
+      <label for="studentId">Студент</label>
+      <select id="studentId" name="studentId" class="form-control" required>
+        <option th:each="client : ${clients}"
+                th:value="${client.id}"
+                th:text="${client.fullName}"
+                th:selected="${client.id == grade.student.id}"></option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="courseId">Курс</label>
+      <select id="courseId" name="courseId" class="form-control" required>
+        <option th:each="course : ${courses}"
+                th:value="${course.id}"
+                th:text="${course.name}"
+                th:selected="${course.id == grade.course.id}"></option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="score">Оценка</label>
+      <input type="number" id="score" name="score" class="form-control" th:value="${grade.score}" min="0" max="100" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Сохранить Оценку</button>
+  </form>
+</div>
+</body>
+</html>

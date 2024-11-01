@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Профиль Студента</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #bbd0ff;
+      color: #1c1c1c;
+    }
+    .btn-custom {
+      background-color: #ffd6ff;
+      color: #1c1c1c;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+    .btn-custom:hover {
+      background-color: #e7c6ff;
+    }
+  </style>
+</head>
+<body>
+<div class="container mt-4">
+  <h2>Профиль Студента</h2>
+
+  <p><strong>Полное имя:</strong> <span th:text="${client.fullName}"></span></p>
+  <p><strong>Возраст:</strong> <span th:text="${client.age}"></span></p>
+  <p><strong>Имя пользователя:</strong> <span th:text="${client.userTable.username}"></span></p>
+
+  <a href="/student/profile/edit" class="btn btn-primary">Редактировать профиль</a>
+  <a href="/student/home" class="btn btn-custom">Назад</a>
+</div>
+</body>
+</html>

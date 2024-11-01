@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Добавить клиента на курс</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #2f3e46;
+      color: #cad2c5;
+    }
+    .container {
+      max-width: 500px;
+      background-color: #354f52;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    }
+    h2 {
+      color: #84a98c;
+    }
+    .btn-primary {
+      background-color: #52796f;
+      border-color: #52796f;
+    }
+    .btn-primary:hover {
+      background-color: #84a98c;
+      border-color: #84a98c;
+    }
+    label {
+      color: #cad2c5;
+    }
+    .form-control {
+      background-color: #52796f;
+      color: #cad2c5;
+    }
+  </style>
+</head>
+<body>
+<div class="container mt-5">
+  <a href="/admin/manage-client-courses" class="btn btn-secondary mb-3">Вернуться</a>
+  <h2>Добавить клиента на курс</h2>
+  <form id="addClientCourseForm">
+    <div class="form-group">
+      <label for="clientId">Клиент:</label>
+      <select id="clientId" name="client.id" class="form-control" required>
+        <option th:each="client : ${clients}" th:value="${client.id}">
+          <span th:text="${#strings.concat(client.fullName, ' (', (client.userTable.roles.size() > 0 ? client.userTable.roles[0].name : 'Нет роли'), ')')}"></span>
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="courseId">Курс:</label>
+      <select id="courseId" name="course.id" class="form-control" required>
+        <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.name}"></option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Сохранить</button>
+  </form>
+</div>
+
+<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="errorModalLabel">Ошибка</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <span id="errorMessage"></span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+    $('#addClientCourseForm').on('submit', function(event) {
+      event.preventDefault();
+      const formData = $(this).serialize();
+
+      $.post("/admin/save-client-course", formData)
+              .done(function(response) {
+                alert(response);
+                window.location.href = "/admin/manage-client-courses";
+              })
+              .fail(function(jqXHR) {
+                $('#errorMessage').text(jqXHR.responseText);
+                $('#errorModal').modal('show');
+              });
+    });
+  });
+</script>
+</body>
+</html>

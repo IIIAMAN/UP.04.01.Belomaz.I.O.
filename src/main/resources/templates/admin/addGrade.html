@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Добавить Оценку</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #2f3e46;
+      color: #cad2c5;
+    }
+    .container {
+      max-width: 500px;
+      background-color: #354f52;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    }
+    h1 {
+      color: #84a98c;
+    }
+    .btn-primary {
+      background-color: #52796f;
+      border-color: #52796f;
+    }
+    .btn-primary:hover {
+      background-color: #84a98c;
+      border-color: #84a98c;
+    }
+    label {
+      color: #cad2c5;
+    }
+    .form-control {
+      background-color: #52796f;
+      color: #cad2c5;
+    }
+  </style>
+</head>
+<body>
+<div class="container mt-5">
+  <h1>Добавить Оценку</h1>
+  <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+  <form action="/admin/save-grade" method="post">
+    <div class="form-group">
+      <label for="score">Оценка</label>
+      <input type="number" name="score" id="score" class="form-control" min="0" max="100" required>
+    </div>
+    <div class="form-group">
+      <label for="student">Студент</label>
+      <select name="student" id="student" class="form-control" required>
+        <option th:each="client : ${clients}" th:value="${client.id}"
+                th:text="${client.fullName} + ' (' + ${client.userTable.username} + ')'">
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="course">Курс</label>
+      <select name="course" id="course" class="form-control" required>
+        <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.name}"></option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+    <a href="/admin/manage-grades" class="btn btn-secondary">Назад</a>
+  </form>
+</div>
+</body>
+</html>

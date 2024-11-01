@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Редактировать Пользователя</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #2f3e46;
+      color: #cad2c5;
+    }
+    .container {
+      margin-top: 30px;
+      background-color: #354f52;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    }
+    h1 {
+      color: #84a98c;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .btn-primary {
+      background-color: #52796f;
+      border-color: #52796f;
+    }
+    .btn-primary:hover {
+      background-color: #84a98c;
+      border-color: #84a98c;
+    }
+    label {
+      color: #cad2c5;
+    }
+    .form-control {
+      background-color: #52796f;
+      color: #cad2c5;
+    }
+    .form-control:focus {
+      background-color: #84a98c;
+      color: #17203D;
+      border-color: #84a98c;
+      box-shadow: 0 0 5px rgba(132, 169, 140, 0.5);
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Редактировать Пользователя</h1>
+  <a href="/admin/manage" class="btn btn-secondary mb-3">Вернуться назад</a>
+  <form action="/admin/update-user" method="post">
+    <input type="hidden" name="id" th:value="${user.id}"/>
+    <div class="form-group">
+      <label for="username">Имя пользователя</label>
+      <input type="text" class="form-control" id="username" name="username" th:value="${user.username}" required>
+    </div>
+    <div class="form-group">
+      <label for="password">Пароль</label>
+      <input type="password" class="form-control" id="password" name="password">
+    </div>
+    <div class="form-group">
+      <label for="role">Роль</label>
+      <select class="form-control" id="role" name="role" required>
+        <th:block th:each="role : ${roles}">
+          <option th:value="${role.name}" th:text="${role.name}"
+                  th:selected="${role.name == user.roles[0].name}"></option>
+        </th:block>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+  </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Редактировать клиента</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #2f3e46;
+      color: #cad2c5;
+    }
+    .container {
+      max-width: 500px;
+      background-color: #354f52;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    }
+    h2 {
+      color: #84a98c;
+    }
+    .btn-primary {
+      background-color: #52796f;
+      border-color: #52796f;
+    }
+    .btn-primary:hover {
+      background-color: #84a98c;
+      border-color: #84a98c;
+    }
+    label {
+      color: #cad2c5;
+    }
+    .form-control {
+      background-color: #52796f;
+      color: #cad2c5;
+    }
+  </style>
+  <script>
+    function splitFullName() {
+      const fullNameInput = document.getElementById("fullName").value;
+      const nameParts = fullNameInput.trim().split(/\s+/);
+      if (nameParts.length >= 3) {
+        document.getElementById("firstName").value = nameParts[0];
+        document.getElementById("lastName").value = nameParts[1];
+        document.getElementById("patronymic").value = nameParts[2];
+      } else {
+        document.getElementById("firstName").value = "";
+        document.getElementById("lastName").value = "";
+        document.getElementById("patronymic").value = "";
+      }
+    }
+
+    function validateName(name) {
+      // Проверка, что имя состоит только из букв и минимум 2 символа
+      const regex = /^[а-яА-ЯёЁa-zA-Z]{2,}$/;
+      return regex.test(name.trim());
+    }
+
+    function validateForm(event) {
+      const firstName = document.getElementById("firstName").value;
+      const lastName = document.getElementById("lastName").value;
+      const patronymic = document.getElementById("patronymic").value;
+
+      if (!validateName(firstName)) {
+        alert("Имя должно содержать минимум 2 буквы.");
+        event.preventDefault();
+      }
+      if (!validateName(lastName)) {
+        alert("Фамилия должна содержать минимум 2 буквы.");
+        event.preventDefault();
+      }
+      if (!validateName(patronymic)) {
+        alert("Отчество должно содержать минимум 2 буквы.");
+        event.preventDefault();
+      }
+    }
+  </script>
+</head>
+<body>
+<div class="container mt-5">
+  <a href="/admin/manage-clients" class="btn btn-secondary mb-3">Вернуться</a>
+  <h2>Редактировать клиента</h2>
+
+  <div th:if="${message}" class="alert alert-danger">
+    <span th:text="${message}"></span>
+  </div>
+
+  <form action="/admin/update-client" method="post" onsubmit="validateForm(event)">
+    <input type="hidden" name="id" th:value="${client.id}"/>
+
+    <input type="hidden" id="fullName" name="fullName" th:value="${client.fullName}" onblur="splitFullName()">
+
+    <div class="form-group">
+      <label for="firstName">Имя</label>
+      <input type="text" class="form-control" id="firstName" name="firstName" required>
+    </div>
+
+    <div class="form-group">
+      <label for="lastName">Фамилия</label>
+      <input type="text" class="form-control" id="lastName" name="lastName" required>
+    </div>
+
+    <div class="form-group">
+      <label for="patronymic">Отчество</label>
+      <input type="text" class="form-control" id="patronymic" name="patronymic" required>
+    </div>
+
+    <div class="form-group mt-3">
+      <label for="username">Логин</label>
+      <input type="text" class="form-control" id="username" name="username" required th:value="${client.userTable.username}">
+    </div>
+
+    <div class="form-group mt-3">
+      <label for="password">Пароль (оставьте пустым, если не хотите менять)</label>
+      <input type="password" class="form-control" id="password" name="password">
+    </div>
+
+    <div class="form-group mt-3">
+      <label for="role">Роль</label>
+      <select class="form-control" id="role" name="role" required>
+        <option value="" disabled selected>Выберите роль</option>
+        <th:block th:each="role : ${roles}">
+          <option th:value="${role.name}" th:text="${role.name}"
+                  th:selected="${role.name == client.userTable.roles[0].name}"></option>
+        </th:block>
+      </select>
+    </div>
+
+    <div class="form-group mt-3">
+      <label for="age">Возраст</label>
+      <input type="number" class="form-control" id="age" name="age" min="16" max="65" required th:value="${client.age}">
+    </div>
+
+    <div class="form-group mt-3">
+      <label for="group">Группа</label>
+      <select name="groupId" class="form-control" required>
+        <option value="" disabled selected>Выберите группу</option>
+        <th:block th:each="group : ${groups}">
+          <option th:value="${group.id}"
+                  th:text="${group.name}"
+                  th:selected="${client.group.id == group.id}"></option>
+        </th:block>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Сохранить</button>
+  </form>
+</div>
+</body>
+</html>

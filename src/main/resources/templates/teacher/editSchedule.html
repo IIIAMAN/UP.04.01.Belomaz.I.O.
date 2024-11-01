@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Редактировать Расписание</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #22223b;
+      color: #f2e9e4;
+    }
+    .header {
+      background-color: #4a4e69;
+      padding: 20px;
+      text-align: center;
+    }
+    .alert-custom {
+      background-color: #c9ada7;
+      color: #22223b;
+    }
+  </style>
+</head>
+<body>
+<div class="header">
+  <h1>Редактировать Расписание</h1>
+  <a href="/teacher/schedule/manage" class="btn btn-light">Назад</a>
+</div>
+<div class="container mt-4">
+
+  <div th:if="${error}" class="alert alert-custom" role="alert">
+    <span th:text="${error}"></span>
+  </div>
+
+  <form action="/teacher/schedule/edit" method="post">
+    <input type="hidden" name="id" th:value="${schedule.id}" />
+
+    <div class="form-group">
+      <label for="courseId">Курс</label>
+      <select id="courseId" name="courseId" class="form-control" required>
+        <option value="" disabled selected>Выберите курс</option>
+        <option th:each="course : ${courses}"
+                th:value="${course.id}"
+                th:text="${course.name}"
+                th:selected="${course.id == schedule.course.id}"></option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="roomId">Комната</label>
+      <select id="roomId" name="roomId" class="form-control" required>
+        <option value="" disabled selected>Выберите комнату</option>
+        <option th:each="room : ${rooms}"
+                th:value="${room.id}"
+                th:text="${room.name}"
+                th:selected="${room.id == schedule.room.id}"></option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="dateTime">Дата и Время</label>
+      <input type="datetime-local" class="form-control" id="dateTime" name="dateTime" th:value="${schedule.dateTime}" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+    <a href="/teacher/schedule/manage" class="btn btn-secondary">Отменить</a>
+  </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная Студента</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #bbd0ff;
+            color: #1c1c1c;
+        }
+        .header {
+            background-color: #c8b6ff;
+            padding: 20px;
+            text-align: center;
+            color: #1c1c1c;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .btn-custom {
+            background-color: #ffd6ff;
+            color: #1c1c1c;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-custom:hover {
+            background-color: #e7c6ff;
+        }
+        .container p {
+            font-size: 1.2em;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1>Добро пожаловать, <span th:text="${fullName}">Студент</span>!</h1>
+    <a href="/logout" class="btn btn-danger">Выход</a>
+</div>
+<div class="container mt-4 text-center">
+    <p>Изучайте ваш академический путь:</p>
+    <a href="/student/schedule" class="btn btn-custom mt-3">Посмотреть Расписание</a>
+    <a href="/student/grades" class="btn btn-custom mt-3">Посмотреть Оценки</a>
+    <a href="/student/profile" class="btn btn-custom mt-3">Личная Информация</a>
+</div>
+</body>
+</html>

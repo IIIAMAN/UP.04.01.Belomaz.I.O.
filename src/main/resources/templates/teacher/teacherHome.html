@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Главная Преподавателя</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #22223b;
+      color: #f2e9e4;
+    }
+    .header {
+      background-color: #4a4e69;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    .btn-custom {
+      background-color: #c9ada7;
+      color: #22223b;
+    }
+    .btn-custom:hover {
+      background-color: #9a8c98;
+    }
+  </style>
+</head>
+<body>
+<div class="header">
+  <h1 th:text="'Добро пожаловать, ' + ${username.fullName} + '!'"></h1>
+  <a href="/logout" class="btn btn-danger">Выход</a>
+</div>
+<div class="container mt-4 text-center">
+  <p>Управляйте вашими учебными обязанностями:</p>
+  <a href="/teacher/courses" class="btn btn-custom mt-3">Посмотреть Мои Курсы</a>
+  <a href="/teacher/grades/manage" class="btn btn-custom mt-3">Управлять Оценками Студентов</a>
+  <a href="/teacher/schedule/manage" class="btn btn-custom mt-3">Посмотреть Расписание</a>
+</div>
+</body>
+</html>

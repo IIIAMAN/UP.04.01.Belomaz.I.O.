@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Добавить Курс</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #2f3e46;
+      color: #cad2c5;
+    }
+    .header {
+      background-color: #354f52;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    .container {
+      margin-top: 30px;
+      background-color: #354f52;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    }
+    h1 {
+      color: #84a98c;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .btn-primary {
+      background-color: #52796f;
+      border-color: #52796f;
+    }
+    .btn-primary:hover {
+      background-color: #84a98c;
+      border-color: #84a98c;
+    }
+  </style>
+</head>
+<body>
+<div class="header">
+  <a href="/admin/home" class="btn btn-secondary mb-3">Вернуться назад</a>
+  <h1>Добавить Курс</h1>
+</div>
+<div class="container">
+  <a href="/admin/manage-courses" class="btn btn-secondary mb-3">Вернуться к управлению курсами</a>
+
+  <div th:if="${error}" class="alert alert-danger">
+    <p th:text="${error}"></p>
+  </div>
+
+  <form action="#" th:action="@{/admin/save-course}" th:object="${course}" method="post">
+    <div class="form-group">
+      <label for="name">Название курса</label>
+      <input type="text" id="name" class="form-control" th:field="*{name}" required>
+    </div>
+    <div class="form-group">
+      <label for="subject">Предмет</label>
+      <select id="subject" class="form-control" th:field="*{subject}" required>
+        <option value="" disabled selected>Выберите предмет</option>
+        <option th:each="subject : ${subjects}" th:value="${subject.id}" th:text="${subject.name}"></option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Добавить Курс</button>
+  </form>
+</div>
+</body>
+</html>
